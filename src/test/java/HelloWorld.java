@@ -239,6 +239,7 @@ public class HelloWorld {
 
         Response responseForCheck = RestAssured
                 .given()
+                .log().all()
                 .body(data)
                 .cookies(cookies)
                 .when()
