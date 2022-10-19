@@ -5,9 +5,12 @@ import org.junit.jupiter.api.Test;
 public class Ex7 {
     @Test
     public void longRedirect() {
+        int redirects=0;
         String url= "https://playground.learnqa.ru/api/long_redirect";
         do {
           url=this.returnHeaderLocation(url);
+          redirects++;
+            System.out.println("Количество редиректов = "+redirects);
         }
         while (this.returnCode(url)==301);
     }
