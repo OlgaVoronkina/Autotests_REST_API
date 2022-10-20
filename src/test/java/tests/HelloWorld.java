@@ -1,3 +1,5 @@
+package tests;
+
 import  io.restassured.RestAssured;
 import io.restassured.http.Headers;
 import io.restassured.response.Response;
@@ -5,6 +7,9 @@ import org.junit.jupiter.api.Test;
 import io.restassured.path.json.JsonPath;
 import java.util.HashMap;
 import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class HelloWorld {
     @Test
@@ -248,4 +253,17 @@ public class HelloWorld {
 
             responseForCheck.print();
     }
+
+    //3_1 junit тесты простые
+    @Test
+    public void RestAssured13() {
+        Response response = RestAssured
+                .get("https://playground.learnqa.ru/api/map2")
+                .andReturn();
+//        assertTrue(response.statusCode()==200, "Unexpected status code");
+        assertEquals(200, response.statusCode(),"Unexpected status code");
+    }
+//продолжение по junit смотреть в tests.TestJUnitDraft
+
+
 }

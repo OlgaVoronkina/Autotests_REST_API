@@ -1,3 +1,5 @@
+package tests;
+
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
@@ -12,7 +14,7 @@ import java.util.*;
 
 public class Ex_9 {
     @Test
-    public void ex9_draft() throws IOException {
+    public void ex9() throws IOException {
 
         Set uniquePasswords = this.getPasswords();
         for(Object uniquePassword : uniquePasswords){

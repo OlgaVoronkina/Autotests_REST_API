@@ -1,3 +1,5 @@
+package tests;
+
 import io.restassured.RestAssured;
 import io.restassured.http.Cookie;
 import io.restassured.response.Response;
@@ -73,13 +75,13 @@ public class Ex9_draft {
         System.out.println("Кука после получения в чек куки ---"+cookie);
         Response responseForCheck = RestAssured
                 .given()
-                .log().all()
-                .cookie((Cookie) cookie)
+                .cookies(cookie)
                 .when()
                 .post("https://playground.learnqa.ru/ajax/api/check_auth_cookie")
                 .andReturn();
 
-        String answer = responseForCheck.print();
+        String answer = responseForCheck.asString();
+
         System.out.println("проверка куки = " + answer);
         return answer;
     }
@@ -90,7 +92,6 @@ public class Ex9_draft {
         body.put("password", "ninja");
         Response response = RestAssured
                 .given()
-                .log().all()
                 .body(body)
                 .post("https://playground.learnqa.ru/ajax/api/get_secret_password_homework")
                 .andReturn();
