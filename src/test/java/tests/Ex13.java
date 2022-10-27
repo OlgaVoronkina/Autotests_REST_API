@@ -29,8 +29,39 @@ public class Ex13 {
                 .get("https://playground.learnqa.ru/ajax/api/user_agent_check")
                 .andReturn();
 
+
         assertEquals(expectedPlatform, response.path("platform"),"Platform is not equal to expected value for user_agent - "+user_agent);
         assertEquals(expectedBrowser, response.path("browser"), "Browser is not equal to expected value for user_agent - "+user_agent);
         assertEquals(expectedDevice, response.path("device"), "Device is not equal to expected value for user_agent - "+user_agent);
+
+//        if(!response.path("platform").equals(expectedPlatform)){
+//            System.out.println("Platform is not equal to expected value for user_agent - "+user_agent);
+//        }
+//        else if (!response.path("browser").equals(expectedBrowser)){
+//            System.out.println("Browser is not equal to expected value for user_agent - "+user_agent);
+//        }
+//        else if(!response.path("device").equals(expectedDevice)){
+//            System.out.println("Device is not equal to expected value for user_agent - "+user_agent);
+//        }
+
+//        assertTrue(response.path("platform").equals(expectedPlatform), "pl");
+//        assertTrue(response.getString("browser").equals(expectedBrowser));
+//        assertTrue(response.getString("device").equals(expectedDevice));
+
+
+
+//        String actualPlatform = response.getString("platform");
+//        System.out.println("actualPlatform = "+actualPlatform);
+//        System.out.println("expectedPlatform = "+expectedPlatform);
+//
+//        String actualBrowser = response.getString("browser");
+//        System.out.println("actualBrowser = "+actualBrowser);
+//        System.out.println("expectedBrowser = "+expectedBrowser);
+//
+//        String actualDevice = response.getString("device");
+//        System.out.println("actualDevice = "+actualDevice);
+//        System.out.println("expectedDevice = "+expectedDevice);
+
     }
+
 }

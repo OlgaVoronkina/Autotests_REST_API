@@ -1,0 +1,8 @@
+version: "3"
+
+services:
+  test_runner:
+    build: .
+    image: java_runner_works
+    volumes:
+      - .:/tests/
