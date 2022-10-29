@@ -1,6 +1,5 @@
 package lib;
 
-import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import static org.hamcrest.Matchers.hasKey;
 import static org.hamcrest.Matchers.not;
@@ -26,11 +25,11 @@ public class Assertions {
                 "Response text is not as expected");
     }
 
-    public static void assertResponseValueEquals(JsonPath jsonPath, String expectedAnswer, String parameter){
+    public static void assertTextEquals(String actualAnswer, String expectedAnswer){
         assertEquals(
                 expectedAnswer,
-                jsonPath.get(parameter),
-                "Response text is not as expected");
+                actualAnswer,
+                "Text is not as expected");
     }
 
     public static void assertResponseCodeEquals(Response Response, int expectedStatusCode){
@@ -53,6 +52,5 @@ public class Assertions {
     public static void assertJsonHasNotField(Response Response, String unexpectedFieldName) {
         Response.then().assertThat().body("$", not(hasKey(unexpectedFieldName)));
     }
-
 
 }

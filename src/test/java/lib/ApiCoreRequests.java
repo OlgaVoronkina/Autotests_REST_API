@@ -3,7 +3,6 @@ package lib;
 import io.qameta.allure.Step;
 import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.http.Header;
-import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
 import java.util.Map;
@@ -22,7 +21,7 @@ public class ApiCoreRequests {
     }
 
     @Step("Make a GET - request with id")
-    public Response makeGetRequest (String url, String id){
+    public Response makeGetRequest (String url, int id){
         return given()
                 .filter(new AllureRestAssured())
                 .get(url+id)
@@ -56,16 +55,8 @@ public class ApiCoreRequests {
                 .andReturn();
     }
 
-    @Step("Make a POST-request (return JSON)")
-    public JsonPath makePOSTRequestJSON(String url, Map<String,String> userData){
-        return   given()
-                .body(userData)
-                .post(url)
-                .jsonPath();
-    }
-
     @Step("Make a PUT - request")
-    public Response makePutRequest (String url, Map<String,String> editData, String id){
+    public Response makePutRequest (String url, Map<String,String> editData, int id){
         return given()
                 .body(editData)
                 .put(url+id)
@@ -73,7 +64,7 @@ public class ApiCoreRequests {
     }
 
     @Step("Make a PUT - request with header and cookie")
-    public Response makePutRequest (String url, String header, String cookie, Map<String,String> editData, String id){
+    public Response makePutRequest (String url, String header, String cookie, Map<String,String> editData, int id){
         return given()
                 .header(new Header("x-csrf-token", header))
                 .cookie("auth_sid", cookie)
@@ -82,15 +73,13 @@ public class ApiCoreRequests {
                 .andReturn();
     }
 
-    @Step("Make a PUT - request with header and cookie")
-    public JsonPath makePutRequestJson (String url, String header, String cookie, Map<String,String> editData, String id){
+    @Step("Make a DELETE - request with header and cookie")
+    public Response makeDeleteRequest (String url, String header, String cookie,  int id){
         return given()
                 .header(new Header("x-csrf-token", header))
                 .cookie("auth_sid", cookie)
-                .body(editData)
-                .put(url+id)
-                .jsonPath();
+                .delete(url+id)
+                .andReturn();
     }
-
 
 }
