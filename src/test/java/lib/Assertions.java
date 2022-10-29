@@ -1,5 +1,6 @@
 package lib;
 
+import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import static org.hamcrest.Matchers.hasKey;
 import static org.hamcrest.Matchers.not;
@@ -22,6 +23,13 @@ public class Assertions {
         assertEquals(
                 expectedAnswer,
                 Response.asString(),
+                "Response text is not as expected");
+    }
+
+    public static void assertResponseValueEquals(JsonPath jsonPath, String expectedAnswer, String parameter){
+        assertEquals(
+                expectedAnswer,
+                jsonPath.get(parameter),
                 "Response text is not as expected");
     }
 
