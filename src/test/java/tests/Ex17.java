@@ -1,6 +1,5 @@
 package tests;
 
-import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import lib.ApiCoreRequests;
 import lib.Assertions;
@@ -16,10 +15,10 @@ public class Ex17 extends BaseTestCase {
 
     //1.Попытаемся изменить данные пользователя, будучи неавторизованными
     @Test
-    public void editUserWithoutLogin1(){
+    public void editUserWithoutLogin(){
         //создаем нового пользователя и получаем его id
         Map<String, String> userData = DataGenerator.getRegistrationData();
-        String userId = createUserAndGetId(userData);
+        int userId = createUserAndGetId(userData);
 
         //пытаемся изменить его данные
         String newName = "New Name";
@@ -34,10 +33,10 @@ public class Ex17 extends BaseTestCase {
 
     //2.Попытаемся изменить данные пользователя, будучи авторизованными другим пользователем
     @Test
-    public void editUserAnotherUser2(){
+    public void editUserAnotherUser(){
         //создаем нового пользователя и получаем его id
         Map<String, String> userData = DataGenerator.getRegistrationData();
-        String userId = createUserAndGetId(userData);
+        int userId = createUserAndGetId(userData);
 
         //логинимся под другим пользователем
         Response userLogin = login("vinkotov@example.com", "1234");
@@ -60,10 +59,10 @@ public class Ex17 extends BaseTestCase {
 
     //3.Попытаемся изменить email пользователя, будучи авторизованными тем же пользователем, на новый email без символа @
     @Test
-    public void editUserWrongEmail3(){
+    public void editUserWrongEmail(){
         //создаем нового пользователя и получаем его id
         Map<String, String> userData = DataGenerator.getRegistrationData();
-        String userId = createUserAndGetId(userData);
+        int userId = createUserAndGetId(userData);
 
         //логинимся под созданным пользователем
         Response userLogin = login(userData.get("email"), userData.get("password"));
@@ -86,10 +85,10 @@ public class Ex17 extends BaseTestCase {
 
     //Попытаемся изменить firstName пользователя, будучи авторизованными тем же пользователем, на очень короткое значение в один символ
     @Test
-    public void editUserShortFirstName4(){
+    public void editUserShortFirstName(){
         //создаем нового пользователя и получаем его id
         Map<String, String> userData = DataGenerator.getRegistrationData();
-        String userId = createUserAndGetId(userData);
+        int userId = createUserAndGetId(userData);
 
         //логинимся под созданным пользователем
         Response userLogin = login(userData.get("email"), userData.get("password"));
@@ -99,30 +98,16 @@ public class Ex17 extends BaseTestCase {
         Map<String,String> editData = new HashMap<>();
         editData.put("firstName", shortFirstName);
 
-        JsonPath responseEditUser = apiCoreRequests.makePutRequestJson(
+        Response responseEditUser = apiCoreRequests.makePutRequest(
                 "https://playground.learnqa.ru/api/user/",
                 this.getHeader(userLogin, "x-csrf-token"),
                 this.getCookie(userLogin, "auth_sid"),
                 editData,
                 userId);
 
-        Assertions.assertResponseValueEquals(responseEditUser, "Too short value for field firstName", "error");
-    }
+        String answer = getStringFromJson(responseEditUser,"error");
 
-    public  String createUserAndGetId(Map <String, String>  userData){
-        JsonPath responseCreateAuth = apiCoreRequests
-                .makePOSTRequestJSON("https://playground.learnqa.ru/api/user", userData);
-
-        String id = responseCreateAuth.get("id");
-        return id;
-    }
-
-    public Response login(String email, String password) {
-        Map<String, String> authData = new HashMap<>();
-        authData.put("email", email);
-        authData.put("password", password);
-        Response responseGetAuth = apiCoreRequests.makePOSTRequest("https://playground.learnqa.ru/api/user/login", authData);
-        return responseGetAuth;
+        Assertions.assertTextEquals(answer, "Too short value for field firstName");
     }
 
 }
