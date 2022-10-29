@@ -9,7 +9,9 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 
+
 public class Ex16 extends BaseTestCase {
+
     private final ApiCoreRequests apiCoreRequests = new ApiCoreRequests();
 
     //В этой задаче нужно написать тест, который авторизовывается одним пользователем, но получает данные другого (т.е. с другим ID).
