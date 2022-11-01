@@ -55,4 +55,41 @@ public class DataGenerator {
         return userData;
     }
 
+    public static Map<String, String> getRegistrationDataNotAll(String parameter) {
+        Map<String, String> data = new HashMap<>();
+        switch (parameter){
+            case "email":
+                data.put("password", "123");
+                data.put("username", "learnqa");
+                data.put("firstName", "learnqa");
+                data.put("lastName", "learnqa");
+                break;
+            case "password":
+                data.put("email", DataGenerator.getRandomEmail());
+                data.put("username", "learnqa");
+                data.put("firstName", "learnqa");
+                data.put("lastName", "learnqa");
+                break;
+            case "username":
+                data.put("email", DataGenerator.getRandomEmail());
+                data.put("password", "123");
+                data.put("firstName", "learnqa");
+                data.put("lastName", "learnqa");
+                break;
+            case "firstName":
+                data.put("email", DataGenerator.getRandomEmail());
+                data.put("password", "123");
+                data.put("username", "learnqa");
+                data.put("lastName", "learnqa");
+                break;
+            case "lastName":
+                data.put("email", DataGenerator.getRandomEmail());
+                data.put("password", "123");
+                data.put("username", "learnqa");
+                data.put("firstName", "learnqa");
+                break;
+        }
+        return data;
+    }
+
 }
