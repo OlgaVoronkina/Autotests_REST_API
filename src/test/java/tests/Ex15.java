@@ -1,5 +1,6 @@
 package tests;
 
+import io.qameta.allure.*;
 import io.restassured.response.Response;
 import lib.ApiCoreRequests;
 import lib.Assertions;
@@ -17,7 +18,11 @@ public class Ex15 extends BaseTestCase {
     private final ApiCoreRequests apiCoreRequests = new ApiCoreRequests();
 
     // Создание пользователя с некорректным email - без символа @
+    @Link("https://software-testing.ru/lms/mod/assign/view.php?id=294731")
+    @Owner(value = "Olga Voronkina")
     @Test
+    @Description("Создание пользователя с некорректным email - без символа @")
+    @Severity(SeverityLevel.CRITICAL)
     public  void testCreateUserWithWrongEmail(){
         String wrongEmail = DataGenerator.getRandomWrongEmail();
         Map<String, String> userData =  new HashMap<>();
@@ -32,10 +37,11 @@ public class Ex15 extends BaseTestCase {
     }
 
 
-    //Создание пользователя без указания одного из полей - с помощью @ParameterizedTest необходимо проверить, что отсутствие любого параметра не дает зарегистрировать пользователя
-
-@ParameterizedTest
-@ValueSource (strings = {"email","password", "username", "firstName", "lastName"})
+    @Owner(value = "Olga Voronkina")
+    @ParameterizedTest
+    @ValueSource (strings = {"email","password", "username", "firstName", "lastName"})
+    @Description("Создание пользователя без указания одного из полей - с помощью @ParameterizedTest необходимо проверить, что отсутствие любого параметра не дает зарегистрировать пользователя")
+    @Severity(SeverityLevel.CRITICAL)
     public  void testCreateUserWithoutParameter(String parameter){
     Map<String, String> userData =DataGenerator.getRegistrationDataNotAll(parameter);
 
@@ -50,9 +56,11 @@ public class Ex15 extends BaseTestCase {
     }
 
 
-    //Здесь 2 теста. Создание пользователя с очень коротким именем в один символ + Создание пользователя с очень длинным именем - длиннее 250 символов
+    @Owner(value = "Olga Voronkina")
     @ParameterizedTest
     @ValueSource(ints = {1, 251})
+    @Description("Создание пользователя с очень коротким именем в один символ + Создание пользователя с очень длинным именем - длиннее 250 символов")
+    @Severity(SeverityLevel.CRITICAL)
     public  void testCreateUserWithShortAndLongUsername(int usernameLength){
         String username = DataGenerator.getRandomString(usernameLength);
         System.out.println(username);

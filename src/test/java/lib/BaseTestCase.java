@@ -1,5 +1,6 @@
 package lib;
 
+import io.qameta.allure.Step;
 import io.restassured.response.Response;
 import io.restassured.http.Headers;
 
@@ -24,6 +25,7 @@ public class BaseTestCase {
         return cookies.get(name);
     }
 
+    @Step ("получаем его id")
     protected int getIntFromJson(Response Response, String name){
         Response.then().assertThat().body("$",hasKey(name)); // $ - означант что ищем ключ в корне json
         return Response.jsonPath().getInt(name);
@@ -36,6 +38,7 @@ public class BaseTestCase {
 
     private final ApiCoreRequests apiCoreRequests = new ApiCoreRequests();
 
+    @Step("Создает пользователя и получает его id")
     public int createUserAndGetId(Map<String, String> userData){
         Response responseCreateAuth = apiCoreRequests
                 .makePOSTRequest("https://playground.learnqa.ru/api/user", userData);
@@ -43,6 +46,7 @@ public class BaseTestCase {
         return id;
     }
 
+    @Step ("логинимся под пользователем")
     public Response login(String email, String password) {
         Map<String, String> authData = new HashMap<>();
         authData.put("email", email);

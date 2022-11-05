@@ -1,5 +1,7 @@
 package lib;
 
+import io.qameta.allure.Step;
+
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,6 +31,7 @@ public class DataGenerator {
         return sb.toString();
     }
 
+    @Step("генерируем данные для создания нового пользователя")
     public static Map<String, String> getRegistrationData() {
         Map<String, String> data = new HashMap<>();
         data.put("email", DataGenerator.getRandomEmail());
