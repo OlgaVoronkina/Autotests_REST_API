@@ -14,6 +14,7 @@ import java.util.Map;
 public class UserEditTest extends BaseTestCase {
     @Test
     public void testEditJustCreatedTest(){
+
     //generate user
         Map<String, String> userData = DataGenerator.getRegistrationData();
         JsonPath responseCreateAuth = RestAssured
